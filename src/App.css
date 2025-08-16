@@ -1,0 +1,19 @@
+body {
+  background-color: rgb(70, 70, 70);
+}
+
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/*fonts*/
+@font-face {
+  font-family: "Cairo";
+  src: url("/public/fonts/Cairo/Cairo-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
