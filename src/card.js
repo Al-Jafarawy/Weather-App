@@ -8,10 +8,17 @@ import { useEffect, useState } from "react";
 import dayjs, { locale } from "dayjs";
 import "dayjs/locale/ar";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import { changeResult } from "./apiSlice";
 
 let cancelAxios = null;
 
 export default function MediaCard() {
+  //Redux
+  const dispatch = useDispatch();
+  const result = useSelector((state) => {
+    return state.apiReducer.result;
+  });
   const { t, i18n } = useTranslation();
   const [temp, setTemp] = useState({
     CurrentTemp: null,
@@ -37,6 +44,8 @@ export default function MediaCard() {
   }, []);
 
   useEffect(() => {
+    // Redux
+    dispatch(changeResult());
     axios
       .get(
         "https://api.openweathermap.org/data/2.5/weather?lat=30.0444&lon=31.2357&appid=9e8f3063805f1d779997dd062d923c33",
