@@ -25,28 +25,23 @@ export const featchWeather = createAsyncThunk(
 export const weatherApiSlice = createSlice({
   name: "weatherApi",
   initialState: {
-    result: "empty",
     weather: {},
     isLoading: false,
   },
-  reducers: {
-    changeResult: (currentState, action) => {
-      currentState.result = "changed";
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(featchWeather.pending, (state, action) => {
+      .addCase(featchWeather.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(featchWeather.fulfilled, (state, action) => {
         state.isLoading = false;
         state.weather = action.payload;
       })
-      .addCase(featchWeather.rejected, (state, actions) => {
+      .addCase(featchWeather.rejected, (state) => {
         state.isLoading = true;
       });
   },
 });
-export const { changeResult, isLoading } = weatherApiSlice.actions;
+
 export default weatherApiSlice.reducer;
