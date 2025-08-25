@@ -14,27 +14,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeResult } from "./apiSlice";
 import { featchWeather } from "./apiSlice";
 
-let cancelAxios = null;
-
 export default function MediaCard() {
   //Redux
   const dispatch = useDispatch();
-  const result = useSelector((state) => {
-    return state.apiReducer.result;
-  });
-  
+
   const isLoad = useSelector((state) => {
     return state.apiReducer.isLoading;
   });
-  console.log("fuuck", isLoad);
-  const { t, i18n } = useTranslation();
-  const [temp, setTemp] = useState({
-    CurrentTemp: null,
-    disc: "",
-    Min: null,
-    max: null,
-    icon: null,
+
+  const temp = useSelector((state) => {
+    return state.apiReducer.weather;
   });
+
+  const { t, i18n } = useTranslation();
+
   const [lang, setLang] = useState("ar");
 
   function handelLangChange() {
@@ -52,34 +45,7 @@ export default function MediaCard() {
   }, []);
 
   useEffect(() => {
-    // Redux
-    // dispatch(changeResult());
-    console.log(" form card");
     dispatch(featchWeather());
-    axios
-      .get(
-        "https://api.openweathermap.org/data/2.5/weather?lat=30.0444&lon=31.2357&appid=9e8f3063805f1d779997dd062d923c33",
-        {
-          cancelToken: new axios.CancelToken((e) => {
-            cancelAxios = e;
-          }),
-        }
-      )
-      .then(function (response) {
-        const CurrentTemp = Math.round(response.data.main.temp - 273);
-        const max = Math.round(response.data.main.temp_max - 273);
-        const min = Math.round(response.data.main.temp_min - 273);
-        const disc = response.data.weather[0].description;
-        const icon = response.data.weather[0].icon;
-        setTemp({ CurrentTemp, max, min, disc, icon });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    return () => {
-      cancelAxios();
-    };
   }, []);
 
   return (
