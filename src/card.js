@@ -1,35 +1,36 @@
 import "./App.css";
+//Material UI
 import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CloudIcon from "@mui/icons-material/Cloud";
-import axios from "axios";
+//react
 import { useEffect, useState } from "react";
-import dayjs, { locale } from "dayjs";
-import "dayjs/locale/ar";
-import { useTranslation } from "react-i18next";
+//redux
 import { useSelector, useDispatch } from "react-redux";
-import { changeResult } from "./apiSlice";
 import { featchWeather } from "./apiSlice";
+
+//Mixed Libarary
+import { useTranslation } from "react-i18next";
+import "dayjs/locale/ar";
+import dayjs from "dayjs";
 
 export default function MediaCard() {
   //Redux
   const dispatch = useDispatch();
-
   const isLoad = useSelector((state) => {
     return state.apiReducer.isLoading;
   });
-
   const temp = useSelector((state) => {
     return state.apiReducer.weather;
   });
 
+  //Mixed
   const { t, i18n } = useTranslation();
-
   const [lang, setLang] = useState("ar");
 
+  //Using functions
   function handelLangChange() {
     if (lang === "en") {
       setLang("ar");
