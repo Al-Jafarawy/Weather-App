@@ -42,11 +42,8 @@ export default function MediaCard() {
   }
 
   useEffect(() => {
-    i18n.changeLanguage("ar");
-  }, []);
-
-  useEffect(() => {
     dispatch(featchWeather());
+    i18n.changeLanguage("ar");
   }, []);
 
   return (
