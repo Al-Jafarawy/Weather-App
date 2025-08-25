@@ -1,5 +1,7 @@
 import "./App.css";
 import Card from "@mui/material/Card";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CloudIcon from "@mui/icons-material/Cloud";
@@ -10,6 +12,7 @@ import "dayjs/locale/ar";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { changeResult } from "./apiSlice";
+import { featchWeather } from "./apiSlice";
 
 let cancelAxios = null;
 
@@ -19,6 +22,11 @@ export default function MediaCard() {
   const result = useSelector((state) => {
     return state.apiReducer.result;
   });
+  
+  const isLoad = useSelector((state) => {
+    return state.apiReducer.isLoading;
+  });
+  console.log("fuuck", isLoad);
   const { t, i18n } = useTranslation();
   const [temp, setTemp] = useState({
     CurrentTemp: null,
@@ -45,7 +53,9 @@ export default function MediaCard() {
 
   useEffect(() => {
     // Redux
-    dispatch(changeResult());
+    // dispatch(changeResult());
+    console.log(" form card");
+    dispatch(featchWeather());
     axios
       .get(
         "https://api.openweathermap.org/data/2.5/weather?lat=30.0444&lon=31.2357&appid=9e8f3063805f1d779997dd062d923c33",
@@ -118,6 +128,7 @@ export default function MediaCard() {
           <div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <p style={{ fontSize: "70px", margin: " 0 10px" }}>
+                {isLoad ? <CircularProgress style={{ color: "white" }} /> : ""}
                 {temp.CurrentTemp}
               </p>
               <img
